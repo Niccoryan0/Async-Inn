@@ -1,9 +1,9 @@
-# Async-Inn
+# Async Inn
 Author: *Nicco Ryan*
 
 ---
 ## Overview
-This app currently exists to test out the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data.
+This web app currently exists to simulate database information regarding a hotel chain, specifically it's locations, rooms, and amenities. It showcases the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data.
 
 ---
 

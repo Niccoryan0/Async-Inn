@@ -45,10 +45,8 @@ namespace Async_Inn
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                });
+
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
