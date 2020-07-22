@@ -3,7 +3,7 @@ Author: *Nicco Ryan*
 
 ---
 ## Overview
-This web app currently exists to simulate database information regarding a hotel chain, specifically it's locations, rooms, and amenities. It showcases the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data.
+This web app currently exists to simulate database information regarding a hotel chain, specifically it's locations, rooms, and amenities. It showcases the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data. It now also showcases Dependency Injection via abstraction of the three tables in Repositorys and Interfaces that the controller utilizes.
 
 ---
 
