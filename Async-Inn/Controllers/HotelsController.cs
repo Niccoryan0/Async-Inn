@@ -62,6 +62,7 @@ namespace Async_Inn.Controllers
             return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
 
+
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteHotel(int id)

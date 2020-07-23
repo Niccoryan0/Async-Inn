@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace Async_Inn
 {
@@ -26,7 +28,7 @@ namespace Async_Inn
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandle = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             // Register with app that the database exists and what options to use for it.
             services.AddDbContext<AsyncInnDbContext>(options =>
@@ -51,7 +53,6 @@ namespace Async_Inn
 
             app.UseEndpoints(endpoints =>
             {
-
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

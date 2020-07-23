@@ -11,6 +11,8 @@ namespace Async_Inn.Models
         public string Name { get; set; }
         public Layout FloorPlan { get; set; }
 
+        // Nav Properties
+        public List<RoomAmenity> Amenities { get; set; }
     }
 
     public enum Layout
