@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Async_Inn.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    [Migration("20200724004332_addingHotelRoomsSeeds")]
+    [Migration("20200724014121_addingHotelRoomsSeeds")]
     partial class addingHotelRoomsSeeds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,6 +116,9 @@ namespace Async_Inn.Migrations
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<bool>("PetFriendly")
                         .HasColumnType("bit");
 
@@ -130,32 +133,6 @@ namespace Async_Inn.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("HotelRooms");
-
-                    b.HasData(
-                        new
-                        {
-                            HotelId = 1,
-                            RoomNumber = 1,
-                            PetFriendly = true,
-                            Rate = 100.42m,
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            HotelId = 1,
-                            RoomNumber = 2,
-                            PetFriendly = false,
-                            Rate = 88.42m,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            HotelId = 2,
-                            RoomNumber = 1,
-                            PetFriendly = false,
-                            Rate = 120.42m,
-                            RoomId = 1
-                        });
                 });
 
             modelBuilder.Entity("Async_Inn.Models.Room", b =>
