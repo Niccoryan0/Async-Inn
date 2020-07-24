@@ -7,6 +7,7 @@ namespace Async_Inn.Models
 {
     public class HotelRoom
     {
+        public int Id { get; set; }
         // Composite key is these two together:
         public int HotelId { get; set; }
         public int RoomNumber { get; set; }

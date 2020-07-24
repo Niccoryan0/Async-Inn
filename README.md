@@ -14,6 +14,8 @@ Date: *7/20/2020*
 ---
 
 ### Change Log
+1.2: *Adding join tables* - 23 July 2020
+
 1.1: *Applied dependency injection* - 22 July 2020
 
 1.0: *Initial release* - 21 July 2020

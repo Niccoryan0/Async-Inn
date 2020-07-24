@@ -42,11 +42,11 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber)
+        public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom)
         {
             try
             {
-                await _hotelRoom.Update(hotelId, roomNumber);
+                await _hotelRoom.Update(hotelRoom);
                 return NoContent();
             } catch
             {
@@ -61,7 +61,7 @@ namespace Async_Inn.Controllers
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
             await _hotelRoom.Create(hotelRoom);
-            return CreatedAtAction("GetHotelRoom", new { RoomNumber = hotelRoom.RoomNumber }, hotelRoom);
+            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.Id }, hotelRoom);
         }
 
         // DELETE: api/Hotels

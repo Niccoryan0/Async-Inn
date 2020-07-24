@@ -43,12 +43,11 @@ namespace Async_Inn.Models.Services
             return result;
         }
 
-        public async Task<HotelRoom> Update(int hotelId, int roomNumber)
+        public async Task<HotelRoom> Update(HotelRoom hotelRoom)
         {
-            HotelRoom result = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
-            _context.Entry(result).State = EntityState.Modified;
+            _context.Entry(hotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return result;
+            return hotelRoom;
         }
     }
 }
