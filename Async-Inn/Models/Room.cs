@@ -12,6 +12,8 @@ namespace Async_Inn.Models
         public Layout FloorPlan { get; set; }
 
         // Nav Properties
+        public List<HotelRoom> Hotels { get; set; }
+
         public List<RoomAmenity> Amenities { get; set; }
     }
 

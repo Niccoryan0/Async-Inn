@@ -40,11 +40,14 @@ namespace Async_Inn.Models.Interfaces
         Task Delete(int id);
 
         /// <summary>
-        /// Adds a given room to a specific hotel
+        /// Adds a room to a given hotel
         /// </summary>
-        /// <param name="roomId">Unique id for room</param>
-        /// <param name="hotelId">Unique id for hotel</param>
-        /// <returns>Task of completion</returns>
+        /// <param name="hotelId">Unique id of hotel</param>
+        /// <param name="roomNumber">Number of room in hotel</param>
+        /// <param name="roomId">Unique Id of room</param>
+        /// <param name="petFriendly">Bool representing if room is pet friendly</param>
+        /// <param name="rate">Nightly rate of room</param>
+        /// <returns>Task of Completion</returns>
         Task AddRoom(int hotelId, int roomNumber, int roomId, bool petFriendly, decimal rate);
     }
 }

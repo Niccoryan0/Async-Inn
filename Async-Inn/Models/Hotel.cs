@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Async_Inn.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,6 @@ namespace Async_Inn.Models
         public string State { get; set; }
         public string Phone { get; set; }
 
-
+        public List<HotelRoom> Rooms { get; set; }
     }
 }

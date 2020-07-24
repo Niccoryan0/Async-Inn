@@ -15,9 +15,9 @@ namespace Async_Inn.Models
         public int RoomId { get; set; }
         public bool PetFriendly { get; set; }
         public decimal Rate { get; set; }
+
+        // Nav properties
         public Hotel Hotel { get; set; }
         public Room Room { get; set; }
-
-
     }
 }

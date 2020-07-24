@@ -1,4 +1,5 @@
-﻿using Async_Inn.Data;
+﻿using Async_Inn.Controllers;
+using Async_Inn.Data;
 using Async_Inn.Models.Interfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace Async_Inn.Models.Services
         /// <returns>Successful result of adding the hotel</returns>
         public async Task<Hotel> Create(Hotel hotel)
         {
-            _context.Entry(hotel).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+            _context.Entry(hotel).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return hotel;
             // Old way to add stuff to database:
@@ -41,7 +42,7 @@ namespace Async_Inn.Models.Services
         public async Task Delete(int id)
         {
             Hotel hotel = await GetHotel(id);
-            _context.Entry(hotel).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
 
@@ -53,6 +54,10 @@ namespace Async_Inn.Models.Services
         public async Task<Hotel> GetHotel(int id)
         {
             Hotel result = await _context.Hotels.FindAsync(id);
+            var rooms = await _context.HotelRooms.Where(x => x.HotelId == id)
+                                                 .Include(x => x.Room)
+                                                 .ToListAsync();
+            result.Rooms = rooms;
             return result;
         }
 
