@@ -42,26 +42,30 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{hotelId}/Rooms/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
         {
-            try
-            {
-                await _hotelRoom.Update(hotelRoom);
-                return NoContent();
-            } catch
+            if (hotelId != hotelRoom.HotelId || roomNumber != hotelRoom.RoomNumber)
             {
                 return BadRequest();
             }
+
+            var updatedHotel = await _hotelRoom.Update(hotelRoom);
+
+            return Ok(updatedHotel);
         }
 
         // POST: api/Hotels
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
         {
+            if (hotelId != hotelRoom.HotelId)
+            {
+                return BadRequest();
+            }
             await _hotelRoom.Create(hotelRoom);
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.Id }, hotelRoom);
+            return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId }, hotelRoom);
         }
 
         // DELETE: api/Hotels

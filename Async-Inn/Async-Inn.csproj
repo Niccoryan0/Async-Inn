@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200724004332_addingHotelRoomsSeeds.cs" />
     <Compile Remove="Migrations\20200724004332_addingHotelRoomsSeeds.Designer.cs" />
+    <Compile Remove="Migrations\20200724171309_smallChanges.cs" />
+    <Compile Remove="Migrations\20200724171309_smallChanges.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

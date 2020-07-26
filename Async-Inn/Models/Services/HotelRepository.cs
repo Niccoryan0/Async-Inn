@@ -55,9 +55,16 @@ namespace Async_Inn.Models.Services
         {
             Hotel result = await _context.Hotels.FindAsync(id);
             var rooms = await _context.HotelRooms.Where(x => x.HotelId == id)
-                                                 .Include(x => x.Room)
+                                                 .Include(hotelRoom => hotelRoom.Room)
                                                  .ToListAsync();
             result.Rooms = rooms;
+            foreach(HotelRoom hotelRoom in rooms)
+            {
+                var amenities = await _context.RoomAmenities.Where(x => x.RoomId == hotelRoom.RoomId)
+                                            .Include(x => x.Amenity)
+                                            .ToListAsync();
+                hotelRoom.Room.Amenities = amenities;
+            }
             return result;
         }
 
@@ -99,11 +106,8 @@ namespace Async_Inn.Models.Services
                 PetFriendly = petFriendly,
                 Rate = rate
             };
-
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
         }
-
-
     }
 }
