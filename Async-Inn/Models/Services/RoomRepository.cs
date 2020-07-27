@@ -27,9 +27,6 @@ namespace Async_Inn.Models.Services
             _context.Entry(room).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return room;
-            // Old way to add stuff to database:
-            //_context.Rooms.Add(room);
-            //_context.SaveChanges();
         }
 
         /// <summary>
@@ -64,17 +61,12 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Returns all rooms in database
         /// </summary>
-        /// <returns>Successful result of list of rooms</returns>
+        /// <returns>Successful result of List of rooms</returns>
         public async Task<List<Room>> GetRooms()
         {
-            List<Room> result = await _context.Rooms.ToListAsync();
-            foreach (Room room in result)
-            {
-                var amenities = await _context.RoomAmenities.Where(x => x.RoomId == room.Id)
-                                            .Include(x => x.Amenity)
-                                            .ToListAsync();
-                room.Amenities = amenities;
-            }
+            List<Room> result = await _context.Rooms.Include(x => x.Amenities)
+                                                    .ThenInclude(x => x.Amenity)
+                                                    .ToListAsync();
             return result;
         }
 

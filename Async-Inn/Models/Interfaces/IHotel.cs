@@ -15,7 +15,7 @@ namespace Async_Inn.Models.Interfaces
         /// <summary>
         /// Returns all hotels in database
         /// </summary>
-        /// <returns>Successful result of list of hotels</returns>
+        /// <returns>Successful result of List of hotels</returns>
         Task<List<Hotel>> GetHotels();
 
         /// <summary>

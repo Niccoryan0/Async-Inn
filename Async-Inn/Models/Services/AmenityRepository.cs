@@ -64,7 +64,7 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Returns all amenities in database
         /// </summary>
-        /// <returns>Successful result of list of amenities</returns>
+        /// <returns>Successful result of List of amenities</returns>
         public async Task<List<Amenity>> GetAmenities()
         {
             List<Amenity> result = await _context.Amenities.ToListAsync();
