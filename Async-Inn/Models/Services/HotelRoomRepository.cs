@@ -42,7 +42,6 @@ namespace Async_Inn.Models.Services
                                                 .ThenInclude(x => x.Amenities)
                                                 .ThenInclude(x => x.Amenity)
                                                 .FirstOrDefaultAsync();
-            
             return hotelRoom;
         }
 
