@@ -14,6 +14,8 @@ Date: *7/20/2020*
 ---
 
 ### Change Log
+1.3: *Added HotelRoom Joint Entry Table* - 24 July 2020
+
 1.2: *Adding join tables* - 23 July 2020
 
 1.1: *Applied dependency injection* - 22 July 2020

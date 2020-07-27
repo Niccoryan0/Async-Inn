@@ -24,9 +24,9 @@ namespace Async_Inn.Controllers
 
         // GET: api/HotelRooms
         [HttpGet("{hotelId}/Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
         {
-            return await _hotelRoom.GetHotelRooms();
+            return await _hotelRoom.GetHotelRooms(hotelId);
         }
 
         // GET: api/HotelRooms/5
@@ -34,7 +34,10 @@ namespace Async_Inn.Controllers
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomNumber)
         {
             var hotelRoom = await _hotelRoom.GetHotelRoom(hotelId, roomNumber);
-
+            if(hotelRoom == null)
+            {
+                return NotFound();
+            }
             return hotelRoom;
         }
 
@@ -60,11 +63,7 @@ namespace Async_Inn.Controllers
         [HttpPost("{hotelId}/Rooms")]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
         {
-            if (hotelId != hotelRoom.HotelId)
-            {
-                return BadRequest();
-            }
-            await _hotelRoom.Create(hotelRoom);
+            await _hotelRoom.Create(hotelId, hotelRoom);
             return CreatedAtAction("GetHotelRoom", new { hotelId = hotelRoom.HotelId }, hotelRoom);
         }
 

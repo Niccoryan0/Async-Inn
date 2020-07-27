@@ -17,8 +17,9 @@ namespace Async_Inn.Models.Services
             _context = context;
         }
 
-        public async Task<HotelRoom> Create(HotelRoom hotelRoom)
+        public async Task<HotelRoom> Create(int hotelId, HotelRoom hotelRoom)
         {
+            hotelRoom.HotelId = hotelId;
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return hotelRoom;
@@ -33,13 +34,23 @@ namespace Async_Inn.Models.Services
 
         public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber)
         {
-            HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
+            //HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
+
+            var hotelRoom = await _context.HotelRooms.Where(x => x.HotelId == hotelId && x.RoomNumber == roomNumber)
+                                                .Include(x => x.Hotel)
+                                                .Include(x => x.Room)
+                                                .ThenInclude(x => x.Amenities)
+                                                .ThenInclude(x => x.Amenity)
+                                                .FirstOrDefaultAsync();
+            
             return hotelRoom;
         }
 
-        public async Task<List<HotelRoom>> GetHotelRooms()
+        public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
         {
-            List<HotelRoom> result = await _context.HotelRooms.ToListAsync();
+            List<HotelRoom> result = await _context.HotelRooms.Where(x => x.HotelId == hotelId)
+                                                              .Include(x => x.Room)
+                                                              .ToListAsync();
             return result;
         }
 
