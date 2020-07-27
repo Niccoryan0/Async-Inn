@@ -13,7 +13,7 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="room">Room to be added to database</param>
         /// <returns>Successful result of adding the room</returns>
-        Task<Room> Create(Room room);
+        Task<RoomDTO> Create(RoomDTO roomDTO);
 
         /// <summary>
         /// Returns all rooms in database

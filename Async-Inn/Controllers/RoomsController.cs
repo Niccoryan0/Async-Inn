@@ -57,10 +57,10 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+            return CreatedAtAction("GetRoom", new { id = room.ID }, room);
         }
 
         [HttpPost]
@@ -74,7 +74,7 @@ namespace Async_Inn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Room>> DeleteRoom(int id)
+        public async Task<ActionResult<RoomDTO>> DeleteRoom(int id)
         {
             await _room.Delete(id);
             return NoContent();
@@ -82,7 +82,7 @@ namespace Async_Inn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{roomId}/Amenity/{amenityId}")]
-        public async Task<ActionResult<Room>> DeleteRoomAmenity(int roomId, int amenityId)
+        public async Task<ActionResult<RoomDTO>> DeleteRoomAmenity(int roomId, int amenityId)
         {
             await _room.RemoveAmenityFromRoom(roomId, amenityId);
             return NoContent();

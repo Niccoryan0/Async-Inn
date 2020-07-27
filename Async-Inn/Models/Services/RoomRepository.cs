@@ -25,11 +25,18 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="room">Room to be added to database</param>
         /// <returns>Successful result of adding the room</returns>
-        public async Task<Room> Create(Room room)
+        public async Task<RoomDTO> Create(RoomDTO roomDTO)
         {
+            Enum.TryParse(roomDTO.Layout, out Layout layout);
+            Room room = new Room
+            {
+                Id = roomDTO.ID,
+                Name = roomDTO.Name,
+                FloorPlan = layout
+            };
             _context.Entry(room).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return room;
+            return roomDTO;
         }
 
         /// <summary>
