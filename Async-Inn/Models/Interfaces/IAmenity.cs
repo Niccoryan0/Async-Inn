@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Async_Inn.Models.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="id">Id for amenity to be retrieved</param>
         /// <returns>Successful result of specified amenity</returns>
-        Task<Amenity> GetAmenity(int id);
+        Task<AmenityDTO> GetAmenity(int id);
 
         /// <summary>
         /// Updates the details of a given amenity

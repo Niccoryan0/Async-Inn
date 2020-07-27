@@ -1,4 +1,5 @@
 ﻿using Async_Inn.Data;
+using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -39,7 +40,7 @@ namespace Async_Inn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            Amenity amenity = await GetAmenity(id);
+            AmenityDTO amenity = await GetAmenity(id);
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -49,14 +50,15 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="id">Id for amenity to be retrieved</param>
         /// <returns>Successful result of specified amenity</returns>
-        public async Task<Amenity> GetAmenity(int id)
+        public async Task<AmenityDTO> GetAmenity(int id)
         {
-            Amenity result = await _context.Amenities.FindAsync(id);
-            var rooms = await _context.RoomAmenities.Where(x => x.AmenityId == id)
-                                                      .Include(x => x.Room)
-                                                      .ToListAsync();
-            result.Rooms = rooms;
-            return result;
+            var result = await _context.Rooms.FindAsync(id);
+            AmenityDTO amenityDTO = new AmenityDTO
+            {
+                ID = result.Id,
+                Name = result.Name
+            };
+            return amenityDTO;
         }
 
         /// <summary>
