@@ -16,6 +16,10 @@ namespace Async_Inn.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Sets combination composite key
+            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+            modelBuilder.Entity<RoomAmenity>().HasKey(x => new { x.RoomId, x.AmenityId });
+
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel
                 {
@@ -83,13 +87,15 @@ namespace Async_Inn.Data
                     Id = 3,
                     Name = "Big ol shower"
                 }
-                ); ;
+                ); 
         }
 
 
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
 
 
     }

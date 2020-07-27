@@ -3,7 +3,7 @@ Author: *Nicco Ryan*
 
 ---
 ## Overview
-This web app currently exists to simulate database information regarding a hotel chain, specifically it's locations, rooms, and amenities. It showcases the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data. It now also showcases Dependency Injection via abstraction of the three tables in Repositorys and Interfaces that the controller utilizes.
+This web app currently exists to simulate database information regarding a hotel chain, specifically it's locations, rooms, and amenities. It showcases the creation of SQL databases in C#, including creating models, migrating the database, and seeding data. It also has controllers to set up an API for the data. It now also showcases Dependency Injection via abstraction of the three tables in Repositorys and Interfaces that the controller utilizes. 
 
 ---
 
@@ -14,6 +14,10 @@ Date: *7/20/2020*
 ---
 
 ### Change Log
+1.3: *Added HotelRoom Joint Entry Table* - 24 July 2020
+
+1.2: *Adding join tables* - 23 July 2020
+
 1.1: *Applied dependency injection* - 22 July 2020
 
 1.0: *Initial release* - 21 July 2020

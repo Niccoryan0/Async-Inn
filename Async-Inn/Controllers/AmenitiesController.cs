@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -31,7 +32,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenity>> GetAmenity(int id)
+        public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
         {
             return await _amenity.GetAmenity(id);
         }
