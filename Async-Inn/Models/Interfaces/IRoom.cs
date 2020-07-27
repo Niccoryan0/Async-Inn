@@ -17,7 +17,7 @@ namespace Async_Inn.Models.Interfaces
         /// <summary>
         /// Returns all rooms in database
         /// </summary>
-        /// <returns>Successful result of list of rooms</returns>
+        /// <returns>Successful result of List of rooms</returns>
         Task<List<Room>> GetRooms();
 
         /// <summary>

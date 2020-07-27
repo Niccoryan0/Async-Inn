@@ -1,5 +1,6 @@
 ﻿using Async_Inn.Controllers;
 using Async_Inn.Data;
+using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -56,22 +57,27 @@ namespace Async_Inn.Models.Services
             Hotel result = await _context.Hotels.FindAsync(id);
             var rooms = await _context.HotelRooms.Where(x => x.HotelId == id)
                                                  .Include(hotelRoom => hotelRoom.Room)
+                                                 .ThenInclude(room => room.Amenities)
+                                                 .ThenInclude(amenities => amenities.Amenity)
                                                  .ToListAsync();
-            result.Rooms = rooms;
-            foreach(HotelRoom hotelRoom in rooms)
+            HotelDTO hotelDTO = new HotelDTO
             {
-                var amenities = await _context.RoomAmenities.Where(x => x.RoomId == hotelRoom.RoomId)
-                                            .Include(x => x.Amenity)
-                                            .ToListAsync();
-                hotelRoom.Room.Amenities = amenities;
-            }
+                ID = result.Id,
+                Name = result.Name,
+                StreetAddress = result.StreetAddress,
+                City = result.City,
+                State = result.State,
+                Phone = result.Phone
+            };
+
+            result.Rooms = rooms;
             return result;
         }
 
         /// <summary>
         /// Returns all hotels in database
         /// </summary>
-        /// <returns>Successful result of list of hotels</returns>
+        /// <returns>Successful result of List of hotels</returns>
         public async Task<List<Hotel>> GetHotels()
         {
             List<Hotel> result = await _context.Hotels.ToListAsync();

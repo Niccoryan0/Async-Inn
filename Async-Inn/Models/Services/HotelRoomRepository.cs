@@ -17,6 +17,12 @@ namespace Async_Inn.Models.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Add a room to a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="hotelRoom">HotelRoom object with data for room addition</param>
+        /// <returns>Details of hotel room</returns>
         public async Task<HotelRoom> Create(int hotelId, HotelRoom hotelRoom)
         {
             hotelRoom.HotelId = hotelId;
@@ -25,6 +31,12 @@ namespace Async_Inn.Models.Services
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Delete a specific room from a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="roomNumber">Room number in hotel</param>
+        /// <returns>Task of completion</returns>
         public async Task Delete(int hotelId, int roomNumber)
         {
             HotelRoom hotelRoom = await GetHotelRoom(hotelId, roomNumber);
@@ -32,6 +44,12 @@ namespace Async_Inn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Get a specific room in a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="roomNumber">Room number to be retrieved</param>
+        /// <returns>HotelRoom data for specified room</returns>
         public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber)
         {
             //HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomNumber);
@@ -45,6 +63,11 @@ namespace Async_Inn.Models.Services
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Get all rooms in a certain hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <returns>List of all rooms in the hotel</returns>
         public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
         {
             List<HotelRoom> result = await _context.HotelRooms.Where(x => x.HotelId == hotelId)
@@ -53,6 +76,11 @@ namespace Async_Inn.Models.Services
             return result;
         }
 
+        /// <summary>
+        /// Change information about a certain hotelRoom
+        /// </summary>
+        /// <param name="hotelRoom">Changed HotelRoom data</param>
+        /// <returns>Changed HotelRoom data</returns>
         public async Task<HotelRoom> Update(HotelRoom hotelRoom)
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;

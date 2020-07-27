@@ -8,14 +8,42 @@ namespace Async_Inn.Models.Interfaces
 {
     public interface IHotelRoom
     {
+        /// <summary>
+        /// Add a room to a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="hotelRoom">HotelRoom object with data for room addition</param>
+        /// <returns>Details of hotel room</returns>
         Task<HotelRoom> Create(int hotelId, HotelRoom hotelRoom);
 
+        /// <summary>
+        /// Get all rooms in a certain hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <returns>List of all rooms in the hotel</returns>
         Task<List<HotelRoom>> GetHotelRooms(int hotelId);
-
+        
+        /// <summary>
+        /// Get a specific room in a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="roomNumber">Room number to be retrieved</param>
+        /// <returns>HotelRoom data for specified room</returns>
         Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber);
 
+        /// <summary>
+        /// Change information about a certain hotelRoom
+        /// </summary>
+        /// <param name="hotelRoom">Changed HotelRoom data</param>
+        /// <returns>Changed HotelRoom data</returns>
         Task<HotelRoom> Update(HotelRoom hotelRoom);
 
+        /// <summary>
+        /// Delete a specific room from a hotel
+        /// </summary>
+        /// <param name="hotelId">Unique ID of hotel</param>
+        /// <param name="roomNumber">Room number in hotel</param>
+        /// <returns>Task of completion</returns>
         Task Delete(int hotelId, int roomNumber);
     }
 }
