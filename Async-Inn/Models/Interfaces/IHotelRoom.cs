@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Async_Inn.Models.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,7 +22,7 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="hotelId">Unique ID of hotel</param>
         /// <returns>List of all rooms in the hotel</returns>
-        Task<List<HotelRoom>> GetHotelRooms(int hotelId);
+        Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId);
         
         /// <summary>
         /// Get a specific room in a hotel
@@ -29,7 +30,7 @@ namespace Async_Inn.Models.Interfaces
         /// <param name="hotelId">Unique ID of hotel</param>
         /// <param name="roomNumber">Room number to be retrieved</param>
         /// <returns>HotelRoom data for specified room</returns>
-        Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber);
+        Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber);
 
         /// <summary>
         /// Change information about a certain hotelRoom

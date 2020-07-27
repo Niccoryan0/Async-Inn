@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Async_Inn.Models.DTOs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Async_Inn.Models.Interfaces
@@ -16,14 +17,14 @@ namespace Async_Inn.Models.Interfaces
         /// Returns all hotels in database
         /// </summary>
         /// <returns>Successful result of List of hotels</returns>
-        Task<List<Hotel>> GetHotels();
+        Task<List<HotelDTO>> GetHotels();
 
         /// <summary>
         /// Gets a specific hotel from the database
         /// </summary>
         /// <param name="id">Id for hotel to be retrieved</param>
         /// <returns>Successful result of specified hotel</returns>
-        Task<Hotel> GetHotel(int id);
+        Task<HotelDTO> GetHotel(int id);
 
         /// <summary>
         /// Updates the details of a given hotel
