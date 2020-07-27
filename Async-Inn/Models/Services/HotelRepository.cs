@@ -14,10 +14,12 @@ namespace Async_Inn.Models.Services
     public class HotelRepository : IHotel
     {
         private AsyncInnDbContext _context;
-        
-        public HotelRepository(AsyncInnDbContext context)
+        private IHotelRoom _hotelRooms;
+
+        public HotelRepository(AsyncInnDbContext context, IHotelRoom hotelRooms)
         {
             _context = context;
+            _hotelRooms = hotelRooms;
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace Async_Inn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            Hotel hotel = await GetHotel(id);
+            Hotel hotel = await _context.Hotels.FindAsync(id);
             _context.Entry(hotel).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -52,14 +54,16 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="id">Id for hotel to be retrieved</param>
         /// <returns>Successful result of specified hotel</returns>
-        public async Task<Hotel> GetHotel(int id)
+        public async Task<HotelDTO> GetHotel(int id)
         {
-            Hotel result = await _context.Hotels.FindAsync(id);
-            var rooms = await _context.HotelRooms.Where(x => x.HotelId == id)
-                                                 .Include(hotelRoom => hotelRoom.Room)
-                                                 .ThenInclude(room => room.Amenities)
-                                                 .ThenInclude(amenities => amenities.Amenity)
+            var result = await _context.Hotels.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
                                                  .ToListAsync();
+            List<HotelRoomDTO> rooms = new List<HotelRoomDTO>();
+            foreach (var room in hotelRooms)
+            {
+                rooms.Add(await _hotelRooms.GetHotelRoom(room.HotelId, room.RoomNumber));
+            }
             HotelDTO hotelDTO = new HotelDTO
             {
                 ID = result.Id,
@@ -67,21 +71,25 @@ namespace Async_Inn.Models.Services
                 StreetAddress = result.StreetAddress,
                 City = result.City,
                 State = result.State,
-                Phone = result.Phone
+                Phone = result.Phone,
+                Rooms = rooms
             };
-
-            result.Rooms = rooms;
-            return result;
+            return hotelDTO;
         }
 
         /// <summary>
         /// Returns all hotels in database
         /// </summary>
         /// <returns>Successful result of List of hotels</returns>
-        public async Task<List<Hotel>> GetHotels()
+        public async Task<List<HotelDTO>> GetHotels()
         {
             List<Hotel> result = await _context.Hotels.ToListAsync();
-            return result;
+            List<HotelDTO> hotels = new List<HotelDTO>();
+            foreach (var item in result)
+            {
+                hotels.Add(await GetHotel(item.Id));
+            }
+            return hotels;
         }
 
         /// <summary>

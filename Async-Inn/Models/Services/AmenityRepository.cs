@@ -23,14 +23,16 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="amenity">Hotel to be added to database</param>
         /// <returns>Successful result of adding the amenity</returns>
-        public async Task<Amenity> Create(Amenity amenity)
+        public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
-            _context.Entry(amenity).State = EntityState.Added;
+            Amenity newAmenity = new Amenity() 
+            {
+                Name = amenity.Name
+            };
+
+            _context.Entry(newAmenity).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return amenity;
-            // Old way to add stuff to database:
-            //_context.Amenities.Add(amenity);
-            //_context.SaveChanges();
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace Async_Inn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            AmenityDTO amenity = await GetAmenity(id);
+            Amenity amenity = await _context.Amenities.FindAsync(id);
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -52,7 +54,7 @@ namespace Async_Inn.Models.Services
         /// <returns>Successful result of specified amenity</returns>
         public async Task<AmenityDTO> GetAmenity(int id)
         {
-            var result = await _context.Rooms.FindAsync(id);
+            var result = await _context.Amenities.FindAsync(id);
             AmenityDTO amenityDTO = new AmenityDTO
             {
                 ID = result.Id,
@@ -65,10 +67,16 @@ namespace Async_Inn.Models.Services
         /// Returns all amenities in database
         /// </summary>
         /// <returns>Successful result of List of amenities</returns>
-        public async Task<List<Amenity>> GetAmenities()
+        public async Task<List<AmenityDTO>> GetAmenities()
         {
             List<Amenity> result = await _context.Amenities.ToListAsync();
-            return result;
+            var amenities = new List<AmenityDTO>();
+
+            foreach (var amenity in result)
+            {
+                amenities.Add(await GetAmenity(amenity.Id));
+            }
+            return amenities;
         }
 
         /// <summary>

@@ -13,14 +13,14 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="amenity">Hotel to be added to database</param>
         /// <returns>Successful result of adding the amenity</returns>
-        Task<Amenity> Create(Amenity amenity);
+        Task<AmenityDTO> Create(AmenityDTO amenity);
 
 
         /// <summary>
         /// Returns all amenities in database
         /// </summary>
         /// <returns>Successful result of List of amenities</returns>
-        Task<List<Amenity>> GetAmenities();
+        Task<List<AmenityDTO>> GetAmenities();
 
         /// <summary>
         /// Gets a specific amenity from the database
