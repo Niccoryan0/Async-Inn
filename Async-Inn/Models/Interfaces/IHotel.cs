@@ -11,7 +11,7 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="hotel">Hotel to be added to database</param>
         /// <returns>Successful result of adding the hotel</returns>
-        Task<Hotel> Create(Hotel hotel);
+        Task<HotelDTO> Create(HotelDTO hotelDTO);
 
         /// <summary>
         /// Returns all hotels in database

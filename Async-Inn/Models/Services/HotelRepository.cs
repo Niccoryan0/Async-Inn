@@ -27,14 +27,19 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="hotel">Hotel to be added to database</param>
         /// <returns>Successful result of adding the hotel</returns>
-        public async Task<Hotel> Create(Hotel hotel)
+        public async Task<HotelDTO> Create(HotelDTO hotelDTO)
         {
+            Hotel hotel = new Hotel
+            {
+                Name = hotelDTO.Name,
+                StreetAddress = hotelDTO.StreetAddress,
+                City = hotelDTO.City,
+                State = hotelDTO.State,
+                Phone = hotelDTO.Phone
+            };
             _context.Entry(hotel).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return hotel;
-            // Old way to add stuff to database:
-            //_context.Hotels.Add(hotel);
-            //_context.SaveChanges();
+            return hotelDTO;
         }
 
         /// <summary>
