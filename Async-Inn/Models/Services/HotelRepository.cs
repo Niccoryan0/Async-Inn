@@ -13,8 +13,8 @@ namespace Async_Inn.Models.Services
 {
     public class HotelRepository : IHotel
     {
-        private AsyncInnDbContext _context;
-        private IHotelRoom _hotelRooms;
+        private readonly AsyncInnDbContext _context;
+        private readonly IHotelRoom _hotelRooms;
 
         public HotelRepository(AsyncInnDbContext context, IHotelRoom hotelRooms)
         {
@@ -56,24 +56,23 @@ namespace Async_Inn.Models.Services
         /// <returns>Successful result of specified hotel</returns>
         public async Task<HotelDTO> GetHotel(int id)
         {
-            var result = await _context.Hotels.Where(x => x.Id == id).FirstOrDefaultAsync();
-            var hotelRooms = await _context.HotelRooms.Where(x => x.HotelId == id)
-                                                 .ToListAsync();
-            List<HotelRoomDTO> rooms = new List<HotelRoomDTO>();
-            foreach (var room in hotelRooms)
-            {
-                rooms.Add(await _hotelRooms.GetHotelRoom(room.HotelId, room.RoomNumber));
-            }
+            var hotel = await _context.Hotels.Where(x => x.Id == id)
+                                 .Include(x => x.Rooms)
+                                 .FirstOrDefaultAsync();
             HotelDTO hotelDTO = new HotelDTO
             {
-                ID = result.Id,
-                Name = result.Name,
-                StreetAddress = result.StreetAddress,
-                City = result.City,
-                State = result.State,
-                Phone = result.Phone,
-                Rooms = rooms
+                ID = hotel.Id,
+                Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
+                City = hotel.City,
+                State = hotel.State,
+                Phone = hotel.Phone,
             };
+            hotelDTO.Rooms = new List<HotelRoomDTO>();
+            foreach (var room in hotel.Rooms)
+            {
+                hotelDTO.Rooms.Add(await _hotelRooms.GetHotelRoom(room.HotelId, room.RoomNumber));
+            }
             return hotelDTO;
         }
 

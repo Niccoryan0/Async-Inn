@@ -11,7 +11,7 @@ namespace Async_Inn.Models.Services
 {
     public class AmenityRepository : IAmenity
     {
-        private AsyncInnDbContext _context;
+        private readonly AsyncInnDbContext _context;
 
         public AmenityRepository(AsyncInnDbContext context)
         {

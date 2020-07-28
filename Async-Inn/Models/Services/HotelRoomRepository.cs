@@ -11,8 +11,8 @@ namespace Async_Inn.Models.Services
 {
     public class HotelRoomRepository : IHotelRoom
     {
-        private AsyncInnDbContext _context;
-        private IRoom _rooms;
+        private readonly AsyncInnDbContext _context;
+        private readonly IRoom _rooms;
 
         public HotelRoomRepository(AsyncInnDbContext context, IRoom rooms)
         {

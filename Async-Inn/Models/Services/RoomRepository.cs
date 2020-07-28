@@ -11,8 +11,8 @@ namespace Async_Inn.Models.Services
 {
     public class RoomRepository : IRoom
     {
-        private AsyncInnDbContext _context;
-        private IAmenity _amenities;
+        private readonly AsyncInnDbContext _context;
+        private readonly IAmenity _amenities;
 
         public RoomRepository(AsyncInnDbContext context, IAmenity amenity)
         {
@@ -58,25 +58,21 @@ namespace Async_Inn.Models.Services
         /// <returns>Successful result of specified room</returns>
         public async Task<RoomDTO> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            // Include all amenities in room
-            List<Amenity> roomAmenities = await _context.RoomAmenities.Where(x => x.RoomId == id)
-                                             .Select(room => room.Amenity)
-                                             .ToListAsync();
-            //_amenities.GetAmenities(id)
-            List<AmenityDTO> amenities = new List<AmenityDTO>();
-            foreach (var amenity in roomAmenities)
-            {
-                amenities.Add(await _amenities.GetAmenity(amenity.Id));
-            }
-            // Convert room to RoomDTO
+            var room = await _context.Rooms.Where(x => x.Id == id)
+                                             .Include(x => x.Amenities)
+                                             .FirstOrDefaultAsync();
+
             RoomDTO newRoom = new RoomDTO
             {
                 ID = room.Id,
                 Name = room.Name,
                 Layout = room.FloorPlan.ToString(),
-                Amenities = amenities
             };
+            newRoom.Amenities = new List<AmenityDTO>();
+            foreach (var amenity in room.Amenities)
+            {
+                newRoom.Amenities.Add(await _amenities.GetAmenity(amenity.AmenityId));
+            }
             return newRoom;
         }
 
