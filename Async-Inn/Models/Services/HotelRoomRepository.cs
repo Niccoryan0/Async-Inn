@@ -26,7 +26,7 @@ namespace Async_Inn.Models.Services
         /// <param name="hotelId">Unique ID of hotel</param>
         /// <param name="hotelRoom">HotelRoom object with data for room addition</param>
         /// <returns>Details of hotel room</returns>
-        public async Task<HotelRoom> Create(int hotelId, HotelRoomDTO hotelRoomDTO)
+        public async Task<HotelRoomDTO> Create(int hotelId, HotelRoomDTO hotelRoomDTO)
         {
             HotelRoom hotelRoom = new HotelRoom
             {
@@ -38,7 +38,7 @@ namespace Async_Inn.Models.Services
             };
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return hotelRoom;
+            return hotelRoomDTO;
         }
 
         /// <summary>

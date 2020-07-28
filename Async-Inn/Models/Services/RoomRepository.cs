@@ -52,7 +52,7 @@ namespace Async_Inn.Models.Services
         }
 
         /// <summary>
-        /// Gets a specific room from the database
+        /// Gets a specific room from the database and returns th
         /// </summary>
         /// <param name="id">Id for room to be retrieved</param>
         /// <returns>Successful result of specified room</returns>
@@ -82,13 +82,8 @@ namespace Async_Inn.Models.Services
         /// <returns>Successful result of List of rooms</returns>
         public async Task<List<RoomDTO>> GetRooms()
         {
-            //var result = await _context.Rooms.Include(room => room.Hotels)
-            //                                 .ThenInclude(hotels => hotels.Hotel)
-            //                                 .Include(room => room.Amenities)
-            //                                 .ThenInclude(x => x.Amenity)
-            //                                 .ToListAsync();
             List<Room> result = await _context.Rooms.ToListAsync();
-            var rooms = new List<RoomDTO>();
+            List<RoomDTO> rooms = new List<RoomDTO>();
             foreach (var room in result)
             {
                 rooms.Add(await GetRoom(room.Id));
@@ -134,9 +129,13 @@ namespace Async_Inn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
         {
-            var result = _context.RoomAmenities.FirstOrDefaultAsync(x => x.RoomId == roomId && x.AmenityId == amenityId);
-            _context.Entry(result).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            RoomAmenity result = await _context.RoomAmenities.FindAsync(roomId, amenityId);
+
+            if (result != null)
+            {
+                _context.Entry(result).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

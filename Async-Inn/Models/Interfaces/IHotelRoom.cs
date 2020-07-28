@@ -15,7 +15,7 @@ namespace Async_Inn.Models.Interfaces
         /// <param name="hotelId">Unique ID of hotel</param>
         /// <param name="hotelRoom">HotelRoom object with data for room addition</param>
         /// <returns>Details of hotel room</returns>
-        Task<HotelRoom> Create(int hotelId, HotelRoomDTO hotelRoomDTO);
+        Task<HotelRoomDTO> Create(int hotelId, HotelRoomDTO hotelRoomDTO);
 
         /// <summary>
         /// Get all rooms in a certain hotel
