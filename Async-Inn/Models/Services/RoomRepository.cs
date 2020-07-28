@@ -129,9 +129,13 @@ namespace Async_Inn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
         {
-            var result = _context.RoomAmenities.FirstOrDefaultAsync(x => x.RoomId == roomId && x.AmenityId == amenityId);
-            _context.Entry(result).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
+            RoomAmenity result = await _context.RoomAmenities.FindAsync(roomId, amenityId);
+
+            if (result != null)
+            {
+                _context.Entry(result).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
