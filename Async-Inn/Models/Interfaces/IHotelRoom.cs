@@ -13,15 +13,15 @@ namespace Async_Inn.Models.Interfaces
         /// Add a room to a hotel
         /// </summary>
         /// <param name="hotelId">Unique ID of hotel</param>
-        /// <param name="hotelRoom">HotelRoom object with data for room addition</param>
-        /// <returns>Details of hotel room</returns>
+        /// <param name="hotelRoom">HotelRoomDTO object with data for room addition</param>
+        /// <returns>Details of hotel room as DTO</returns>
         Task<HotelRoomDTO> Create(int hotelId, HotelRoomDTO hotelRoomDTO);
 
         /// <summary>
         /// Get all rooms in a certain hotel
         /// </summary>
         /// <param name="hotelId">Unique ID of hotel</param>
-        /// <returns>List of all rooms in the hotel</returns>
+        /// <returns>List of all rooms in the hotel as DTOs</returns>
         Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId);
         
         /// <summary>
@@ -29,15 +29,15 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="hotelId">Unique ID of hotel</param>
         /// <param name="roomNumber">Room number to be retrieved</param>
-        /// <returns>HotelRoom data for specified room</returns>
+        /// <returns>HotelRoomDTO data for specified room</returns>
         Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber);
 
         /// <summary>
         /// Change information about a certain hotelRoom
         /// </summary>
-        /// <param name="hotelRoom">Changed HotelRoom data</param>
-        /// <returns>Changed HotelRoom data</returns>
-        Task<HotelRoom> Update(HotelRoom hotelRoom);
+        /// <param name="hotelRoom">Updated HotelRoom information as DTO</param>
+        /// <returns>Changed HotelRoomDTO data</returns>
+        Task<HotelRoomDTO> Update(int hotelId, int roomNumber, HotelRoomDTO hotelRoomDTO);
 
         /// <summary>
         /// Delete a specific room from a hotel
