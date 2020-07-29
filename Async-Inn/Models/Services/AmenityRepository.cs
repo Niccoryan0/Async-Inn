@@ -21,8 +21,8 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Creates a new amenity in the database
         /// </summary>
-        /// <param name="amenity">Hotel to be added to database</param>
-        /// <returns>Successful result of adding the amenity</returns>
+        /// <param name="amenity">Amenity to be added to database as DTO</param>
+        /// <returns>Successful result of adding the amenityDTO</returns>
         public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
             Amenity newAmenity = new Amenity() 
@@ -48,10 +48,10 @@ namespace Async_Inn.Models.Services
         }
 
         /// <summary>
-        /// Gets a specific amenity from the database
+        /// Gets a specific amenity DTO from the database
         /// </summary>
         /// <param name="id">Id for amenity to be retrieved</param>
-        /// <returns>Successful result of specified amenity</returns>
+        /// <returns>Successful result of specified amenity DTO</returns>
         public async Task<AmenityDTO> GetAmenity(int id)
         {
             var result = await _context.Amenities.FindAsync(id);
@@ -66,7 +66,7 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Returns all amenities in database
         /// </summary>
-        /// <returns>Successful result of List of amenities</returns>
+        /// <returns>Successful result of List of amenities as DTOs</returns>
         public async Task<List<AmenityDTO>> GetAmenities()
         {
             List<Amenity> result = await _context.Amenities.ToListAsync();
@@ -82,7 +82,7 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Updates the details of a given amenity
         /// </summary>
-        /// <param name="amenity">Hotel to be updated</param>
+        /// <param name="amenity">Amenity DTO to be updated</param>
         /// <returns>Successful result of updated amenity</returns>
         public async Task<Amenity> Update(Amenity amenity)
         {

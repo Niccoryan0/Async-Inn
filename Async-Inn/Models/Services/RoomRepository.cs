@@ -23,8 +23,8 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Creates a new room in the database
         /// </summary>
-        /// <param name="room">Room to be added to database</param>
-        /// <returns>Successful result of adding the room</returns>
+        /// <param name="room">Room to be added to database as DTO</param>
+        /// <returns>Successful result of adding the roomDTO</returns>
         public async Task<RoomDTO> Create(RoomDTO roomDTO)
         {
             Enum.TryParse(roomDTO.Layout, out Layout layout);
@@ -52,10 +52,10 @@ namespace Async_Inn.Models.Services
         }
 
         /// <summary>
-        /// Gets a specific room from the database and returns th
+        /// Gets a specific room from the database
         /// </summary>
         /// <param name="id">Id for room to be retrieved</param>
-        /// <returns>Successful result of specified room</returns>
+        /// <returns>Successful result of specified roomDTO</returns>
         public async Task<RoomDTO> GetRoom(int id)
         {
             var room = await _context.Rooms.Where(x => x.Id == id)
@@ -79,7 +79,7 @@ namespace Async_Inn.Models.Services
         /// <summary>
         /// Returns all rooms in database
         /// </summary>
-        /// <returns>Successful result of List of rooms</returns>
+        /// <returns>Successful result of List of roomDTOs</returns>
         public async Task<List<RoomDTO>> GetRooms()
         {
             List<Room> result = await _context.Rooms.ToListAsync();
@@ -95,12 +95,19 @@ namespace Async_Inn.Models.Services
         /// Updates the details of a given room
         /// </summary>
         /// <param name="room">Room to be updated</param>
-        /// <returns>Successful result of updated room</returns>
-        public async Task<Room> Update(Room room)
+        /// <returns>Successful result of updated roomDTO</returns>
+        public async Task<RoomDTO> Update(int id, RoomDTO roomDTO)
         {
+            Enum.TryParse(roomDTO.Layout, out Layout layout);
+            Room room = new Room
+            {
+                Id = id,
+                Name = roomDTO.Name,
+                FloorPlan = layout
+            };
             _context.Entry(room).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return room;
+            return roomDTO;
         }
 
         /// <summary>

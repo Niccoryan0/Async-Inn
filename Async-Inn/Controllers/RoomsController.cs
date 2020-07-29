@@ -37,14 +37,14 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<IActionResult> PutRoom(int id, RoomDTO roomDTO)
         {
-            if (id != room.Id)
+            if (id != roomDTO.ID)
             {
                 return BadRequest();
             }
 
-            var updatedRoom = await _room.Update(room);
+            var updatedRoom = await _room.Update(id, roomDTO);
 
             return Ok(updatedRoom);
         }

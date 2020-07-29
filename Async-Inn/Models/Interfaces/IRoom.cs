@@ -11,29 +11,29 @@ namespace Async_Inn.Models.Interfaces
         /// <summary>
         /// Creates a new room in the database
         /// </summary>
-        /// <param name="room">Room to be added to database</param>
-        /// <returns>Successful result of adding the room</returns>
+        /// <param name="room">Room to be added to database as DTO</param>
+        /// <returns>Successful result of adding the roomDTO</returns>
         Task<RoomDTO> Create(RoomDTO roomDTO);
 
         /// <summary>
         /// Returns all rooms in database
         /// </summary>
-        /// <returns>Successful result of List of rooms</returns>
+        /// <returns>Successful result of List of roomDTOs</returns>
         Task<List<RoomDTO>> GetRooms();
 
         /// <summary>
         /// Gets a specific room from the database
         /// </summary>
         /// <param name="id">Id for room to be retrieved</param>
-        /// <returns>Successful result of specified room</returns>
+        /// <returns>Successful result of specified roomDTO</returns>
         Task<RoomDTO> GetRoom(int id);
 
         /// <summary>
         /// Updates the details of a given room
         /// </summary>
         /// <param name="room">Room to be updated</param>
-        /// <returns>Successful result of updated room</returns>
-        Task<Room> Update(Room room);
+        /// <returns>Successful result of updated roomDTO</returns>
+        Task<RoomDTO> Update(int id, RoomDTO roomDTO);
 
         /// <summary>
         /// Deletes a specific room from the database

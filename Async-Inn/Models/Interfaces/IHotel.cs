@@ -7,23 +7,23 @@ namespace Async_Inn.Models.Interfaces
     public interface IHotel
     {
         /// <summary>
-        /// Creates a new hotel in the database
+        /// Creates a new hotel in the database from a Hotel DTO
         /// </summary>
-        /// <param name="hotel">Hotel to be added to database</param>
+        /// <param name="hotel">HotelDTO to be added to database</param>
         /// <returns>Successful result of adding the hotel</returns>
         Task<HotelDTO> Create(HotelDTO hotelDTO);
 
         /// <summary>
         /// Returns all hotels in database
         /// </summary>
-        /// <returns>Successful result of List of hotels</returns>
+        /// <returns>Successful result of List of hotelDTOs</returns>
         Task<List<HotelDTO>> GetHotels();
 
         /// <summary>
         /// Gets a specific hotel from the database
         /// </summary>
         /// <param name="id">Id for hotel to be retrieved</param>
-        /// <returns>Successful result of specified hotel</returns>
+        /// <returns>Successful result of specified hotelDTO</returns>
         Task<HotelDTO> GetHotel(int id);
 
         /// <summary>
