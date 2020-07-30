@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Async_Inn</RootNamespace>
+    <UserSecretsId>aa6dd667-6c38-4ad4-8d99-948bf2cbd663</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,9 +11,12 @@
     <Compile Remove="Migrations\20200724004332_addingHotelRoomsSeeds.Designer.cs" />
     <Compile Remove="Migrations\20200724171309_smallChanges.cs" />
     <Compile Remove="Migrations\20200724171309_smallChanges.Designer.cs" />
+    <Compile Remove="Migrations\20200729212046_updatingRoles.cs" />
+    <Compile Remove="Migrations\20200729212046_updatingRoles.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />

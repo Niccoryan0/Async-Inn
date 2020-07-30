@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Async_Inn.Models
@@ -10,5 +11,12 @@ namespace Async_Inn.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+    }
+
+    public static class ApplicationRoles
+    {
+        public const string DistrictManager = "District Manager";
+        public const string PropertyManager = "Property Manager";
+        public const string Agent = "Agent";
     }
 }

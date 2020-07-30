@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Async_Inn.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class RoomsController : ControllerBase
     {
@@ -28,6 +30,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             return await _room.GetRoom(id);
@@ -37,6 +40,7 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize(Policy = "HigherUps")]
         public async Task<IActionResult> PutRoom(int id, RoomDTO roomDTO)
         {
             if (id != roomDTO.ID)
@@ -53,6 +57,7 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize(Policy = "DistrictManagerOnly")]
         public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
@@ -61,6 +66,7 @@ namespace Async_Inn.Controllers
 
         [HttpPost]
         [Route("{roomId}/Amenity/{amenityId}")]
+        [Authorize(Policy = "AllEmployees")]
         // POST: {roomId}/Amenity/{amenityId}
         public async Task<ActionResult> AddAmenityToRoom(int roomId, int amenityId)
         {
@@ -70,6 +76,7 @@ namespace Async_Inn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "DistrictManagerOnly")]
         public async Task<ActionResult<RoomDTO>> DeleteRoom(int id)
         {
             await _room.Delete(id);
@@ -78,6 +85,7 @@ namespace Async_Inn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{roomId}/Amenity/{amenityId}")]
+        [Authorize(Policy = "AllEmployees")]
         public async Task<ActionResult<RoomDTO>> DeleteRoomAmenity(int roomId, int amenityId)
         {
             await _room.RemoveAmenityFromRoom(roomId, amenityId);
