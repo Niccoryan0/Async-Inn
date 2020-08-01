@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Async_Inn.Data;
-using Async_Inn.Models;
+﻿using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
-using Async_Inn.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Async_Inn.Controllers
 {
@@ -27,6 +21,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/HotelRooms
         [HttpGet("{hotelId}/Rooms")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int hotelId)
         {
             return await _hotelRoom.GetHotelRooms(hotelId);
@@ -38,7 +33,7 @@ namespace Async_Inn.Controllers
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
             var hotelRoom = await _hotelRoom.GetHotelRoom(hotelId, roomNumber);
-            if(hotelRoom == null)
+            if (hotelRoom == null)
             {
                 return NotFound();
             }

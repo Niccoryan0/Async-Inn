@@ -32,6 +32,7 @@ namespace Async_Inn.Models.Services
 
             _context.Entry(newAmenity).State = EntityState.Added;
             await _context.SaveChangesAsync();
+            amenity.ID = newAmenity.Id;
             return amenity;
         }
 

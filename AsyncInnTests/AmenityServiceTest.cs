@@ -21,7 +21,7 @@ namespace AsyncInnTests
         {
             var amenity = new AmenityDTO
             {
-                Name = "Room1",
+                Name = "Amenity1",
             };
 
             var repository = BuildRepository();
@@ -32,6 +32,47 @@ namespace AsyncInnTests
             Assert.NotEqual(0, saved.ID);
             Assert.Equal(saved.ID, amenity.ID);
             Assert.Equal(saved.Name, amenity.Name);
+        }
+
+        [Fact]
+        public async Task CanGetSpecificAmenity()
+        {
+            var amenity = new AmenityDTO
+            {
+                Name = "Amenity1",
+            };
+            var amenity2 = new AmenityDTO
+            {
+                Name = "Amenity2",
+            }; 
+            var amenity3 = new AmenityDTO
+            {
+                Name = "Amenity3",
+            };
+            var repository = BuildRepository();
+
+            var saved = await repository.Create(amenity);
+            var saved2 = await repository.Create(amenity2);
+            var saved3 = await repository.Create(amenity3);
+
+            var result = await repository.GetAmenity(2);
+
+            Assert.Equal(saved2.Name, result.Name);
+        }
+
+        [Fact]
+        public async Task Test()
+        {
+            var amenity = new AmenityDTO
+            {
+                Name = "Amenity7",
+            };
+
+            var repository = BuildRepository();
+
+            var saved = await repository.Create(amenity);
+
+            Assert.Equal(7, saved.ID);
         }
     }
 }

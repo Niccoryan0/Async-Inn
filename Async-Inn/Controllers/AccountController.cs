@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Async_Inn.Models;
+﻿using Async_Inn.Models;
 using Async_Inn.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +6,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Async_Inn.Controllers
 {
@@ -33,9 +33,12 @@ namespace Async_Inn.Controllers
             _config = configuration;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("Register/PropertyManager")]
+        [Authorize(Policy = "HigherUps")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
+            if (register.Role == "District Manager" || register.Role == "Property Manager") return Forbid();
+
             ApplicationUser user = new ApplicationUser
             {
                 Email = register.Email,
@@ -48,11 +51,18 @@ namespace Async_Inn.Controllers
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, register.Role);
+                await _userManager.AddToRoleAsync(user, "Agent");
                 await _signInManager.SignInAsync(user, false);
+                var token = CreateToken(user, new List<string>() { register.Role });
+                return Ok(new
+                {
+                    jwt = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo
+                });
             }
             return BadRequest("Invalid registration");
         }
+
 
         [HttpPost("Login")]
         [AllowAnonymous]

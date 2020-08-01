@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Async_Inn.Models.DTOs;
+using Async_Inn.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Async_Inn.Models;
-using Async_Inn.Models.Interfaces;
-using Async_Inn.Models.DTOs;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Async_Inn.Controllers
 {
@@ -23,6 +21,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Rooms
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             return await _room.GetRooms();

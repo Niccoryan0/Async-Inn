@@ -73,6 +73,7 @@ namespace Async_Inn
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("DistrictManagerOnly", policy => policy.RequireRole(ApplicationRoles.DistrictManager));
+                options.AddPolicy("PropertyManagerOnly", policy => policy.RequireRole(ApplicationRoles.DistrictManager));
                 options.AddPolicy("HigherUps", policy => policy.RequireRole(ApplicationRoles.DistrictManager, ApplicationRoles.PropertyManager));
                 options.AddPolicy("AllEmployees", policy => policy.RequireRole(ApplicationRoles.DistrictManager, ApplicationRoles.PropertyManager, ApplicationRoles.Agent));
             });

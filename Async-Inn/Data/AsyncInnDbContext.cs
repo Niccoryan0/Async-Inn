@@ -1,10 +1,6 @@
 ﻿using Async_Inn.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Async_Inn.Data
 {
@@ -12,7 +8,6 @@ namespace Async_Inn.Data
     {
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,7 +59,6 @@ namespace Async_Inn.Data
                     Id = 2,
                     Name = "Dummy Room v2",
                     FloorPlan = Layout.TwoBedrooms
-
                 },
                 new Room
                 {
@@ -83,23 +77,19 @@ namespace Async_Inn.Data
                 {
                     Id = 2,
                     Name = "Flatscreen TV"
-
                 },
                 new Amenity
                 {
                     Id = 3,
                     Name = "Big ol shower"
                 }
-                ); 
+                );
         }
-
 
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<RoomAmenity> RoomAmenities { get; set; }
-
-
     }
 }
