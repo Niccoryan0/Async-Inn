@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Async_Inn.Data;
-using Async_Inn.Models;
+﻿using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
-using Async_Inn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Async_Inn.Controllers
 {
     [Route("api/Hotels")]
+    [Authorize(Policy = "HigherUps")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -25,6 +21,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/HotelRooms
         [HttpGet("{hotelId}/Rooms")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int hotelId)
         {
             return await _hotelRoom.GetHotelRooms(hotelId);
@@ -32,10 +29,11 @@ namespace Async_Inn.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("{hotelId}/Rooms/{roomNumber}")]
+        [AllowAnonymous]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNumber)
         {
             var hotelRoom = await _hotelRoom.GetHotelRoom(hotelId, roomNumber);
-            if(hotelRoom == null)
+            if (hotelRoom == null)
             {
                 return NotFound();
             }
@@ -46,6 +44,7 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{hotelId}/Rooms/{roomNumber}")]
+        [Authorize(Policy = "AllEmployees")]
         public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hotelRoomDTO)
         {
             if (hotelId != hotelRoomDTO.HotelID || roomNumber != hotelRoomDTO.RoomNumber)

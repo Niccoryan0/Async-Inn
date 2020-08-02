@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Async_Inn.Data;
-using Async_Inn.Models;
-using Async_Inn.Models.Interfaces;
+﻿using Async_Inn.Models;
 using Async_Inn.Models.DTOs;
+using Async_Inn.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Async_Inn.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "DistrictManagerOnly")]
     [ApiController]
     public class HotelsController : ControllerBase
     {
@@ -25,6 +22,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
             return await _hotel.GetHotels();
@@ -32,9 +30,10 @@ namespace Async_Inn.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
-          return await _hotel.GetHotel(id);
+            return await _hotel.GetHotel(id);
         }
 
         // PUT: api/Hotels/5
@@ -62,7 +61,6 @@ namespace Async_Inn.Controllers
             await _hotel.Create(hotelDTO);
             return CreatedAtAction("GetHotel", new { id = hotelDTO.ID }, hotelDTO);
         }
-
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
