@@ -34,8 +34,8 @@ namespace Async_Inn.Models.Interfaces
         /// </summary>
         /// <param name="amenity">Amenity DTO to be updated</param>
         /// <returns>Successful result of updated amenity</returns>
-        Task<Amenity> Update(Amenity amenity);
-
+        Task<AmenityDTO> Update(AmenityDTO amenityDTO);
+        
         /// <summary>
         /// Deletes a specific amenity from the database
         /// </summary>

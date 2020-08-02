@@ -51,28 +51,54 @@ namespace AsyncInnTests
             };
             var repository = BuildRepository();
 
-            var saved = await repository.Create(amenity);
+            await repository.Create(amenity);
             var saved2 = await repository.Create(amenity2);
-            var saved3 = await repository.Create(amenity3);
+            await repository.Create(amenity3);
 
-            var result = await repository.GetAmenity(2);
+            // Amenity ID is 5 due to 3 previously seeded Amenities from DbContext
+            var result = await repository.GetAmenity(5);
 
             Assert.Equal(saved2.Name, result.Name);
         }
 
         [Fact]
-        public async Task Test()
+        public async Task CanGetAllAmenities()
         {
-            var amenity = new AmenityDTO
+            var repository = BuildRepository();
+
+            var saved = await repository.GetAmenities();
+
+            Assert.Equal(3, saved.Count);
+            Assert.Equal("A/C", saved[0].Name);
+        }
+
+        [Fact]
+        public async Task CanDeleteAmenity()
+        {
+            var repository = BuildRepository();
+
+            await repository.Delete(1);
+
+            var saved = await repository.GetAmenities();
+
+            Assert.Equal(2, saved.Count);
+            Assert.Equal("Flatscreen TV", saved[0].Name);
+        }
+
+        [Fact]
+        public async Task CanUpdateAmenity()
+        {
+            var amenityUpdate = new AmenityDTO
             {
-                Name = "Amenity7",
+                ID = 1,
+                Name = "AmenityUpdate",
             };
 
             var repository = BuildRepository();
-
-            var saved = await repository.Create(amenity);
-
-            Assert.Equal(7, saved.ID);
+            await repository.Update(amenityUpdate);
+            // Amenity ID is 5 due to 3 previously seeded Amenities from DbContext
+            var result = await repository.GetAmenity(1);
+            Assert.Equal(amenityUpdate.Name, result.Name);
         }
     }
 }

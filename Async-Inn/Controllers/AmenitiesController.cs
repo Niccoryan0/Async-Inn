@@ -47,9 +47,9 @@ namespace Async_Inn.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         [Authorize(Policy = "HigherUps")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
+        public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
         {
-            if (id != amenity.Id)
+            if (id != amenity.ID)
             {
                 return BadRequest();
             }

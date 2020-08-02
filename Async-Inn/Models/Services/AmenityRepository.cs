@@ -85,11 +85,16 @@ namespace Async_Inn.Models.Services
         /// </summary>
         /// <param name="amenity">Amenity DTO to be updated</param>
         /// <returns>Successful result of updated amenity</returns>
-        public async Task<Amenity> Update(Amenity amenity)
+        public async Task<AmenityDTO> Update(AmenityDTO amenityDTO)
         {
+            Amenity amenity = new Amenity
+            {
+                Id = amenityDTO.ID,
+                Name = amenityDTO.Name
+            };
             _context.Entry(amenity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return amenity;
+            return amenityDTO;
         }
     }
 }
