@@ -33,11 +33,11 @@ namespace Async_Inn.Controllers
             _config = configuration;
         }
 
-        [HttpPost("Register/PropertyManager")]
+        [HttpPost("Register")]
         [Authorize(Policy = "HigherUps")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
-            if (register.Role == "District Manager" || register.Role == "Property Manager") return Forbid();
+            if (User.IsInRole("Property Manager") && register.Role != "Agent") return Forbid();
 
             ApplicationUser user = new ApplicationUser
             {
@@ -51,7 +51,7 @@ namespace Async_Inn.Controllers
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "Agent");
+                await _userManager.AddToRoleAsync(user, register.Role);
                 await _signInManager.SignInAsync(user, false);
                 var token = CreateToken(user, new List<string>() { register.Role });
                 return Ok(new
@@ -62,6 +62,8 @@ namespace Async_Inn.Controllers
             }
             return BadRequest("Invalid registration");
         }
+
+
 
 
         [HttpPost("Login")]

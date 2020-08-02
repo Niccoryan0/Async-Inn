@@ -48,8 +48,8 @@ namespace Async_Inn.Models
                 ApplicationUser user = new ApplicationUser();
                 user.UserName = _config["AdminUserName"];
                 user.Email = "Tester@emails.com";
-                user.FirstName = "Nicco";
-                user.LastName = "Ryan";
+                user.FirstName = "Dummy";
+                user.LastName = "Admin";
                 IdentityResult result = userManager.CreateAsync(user, _config["AdminPassword"]).Result;
 
                 if (result.Succeeded)

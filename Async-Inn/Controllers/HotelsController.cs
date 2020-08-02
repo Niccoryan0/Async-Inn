@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Async_Inn.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "HigherUps")]
+    [Authorize(Policy = "DistrictManagerOnly")]
     [ApiController]
     public class HotelsController : ControllerBase
     {
@@ -40,7 +40,6 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        [Authorize(Policy = "DistrictManagerOnly")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
             if (id != hotel.Id)
@@ -57,7 +56,6 @@ namespace Async_Inn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        [Authorize(Policy = "DistrictManagerOnly")]
         public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotelDTO)
         {
             await _hotel.Create(hotelDTO);
@@ -66,7 +64,6 @@ namespace Async_Inn.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
-        [Authorize(Policy = "DistrictManagerOnly")]
         public async Task<ActionResult> DeleteHotel(int id)
         {
             await _hotel.Delete(id);
